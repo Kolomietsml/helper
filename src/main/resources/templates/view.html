@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -7,10 +7,31 @@
 </head>
 <body>
 
-    <p th:text="${product.name}">Name</p>
-    <p th:text="${product.price}">Price</p>
-    <p th:text="${product.description}">Description</p>
+    <div th:if="${product}">
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td th:text="${product.name}">Name</td>
+                <td th:text="${product.description}">Description</td>
+                <td th:text="${product.price}">Price</td>
+            </tr>
+            </tbody>
+
+        </table>
+
+    </div>
 
     <a href="/products/">Back</a>
+
 </body>
 </html>
