@@ -7,13 +7,15 @@
 </head>
 <body>
 
+<h1>Admin panel</h1>
+
     <h3>Edit product</h3>
 
     <form th:action="@{/admin/products/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
 
         <div class="form-group">
             <label for="name">Name</label>
-            <input class="form-control is-valid" th:errorclass="is-invalid" type="text" id="name" th:field="*{name}" placeholder="Name" maxlength="100" th:value="${product.name}" />
+            <input class="form-control is-valid" th:errorclass="is-invalid" type="text" id="name" th:field="*{name}" placeholder="Name" th:value="${product.name}" />
             <p class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
 
@@ -29,6 +31,11 @@
             <p class="invalid-feedback" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
         </div>
 
+        <div class="form-group">
+            <select th:field="*{categoryId}">
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"/>
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-primary mb-4">Submit</button>
     </form>

@@ -21,12 +21,18 @@ public class ProductsController {
     @GetMapping("/")
     public String getProducts(Model model) {
         model.addAttribute("products", productService.getAll());
-        return "list";
+        return "products/list";
+    }
+
+    @GetMapping("/category/{id}")
+    public String getProductsByCategory(@PathVariable long id, Model model) {
+        model.addAttribute("products", productService.getProductsByCategory(id));
+        return "products/list";
     }
 
     @GetMapping("/{id}")
     public String getProduct(@PathVariable long id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
-        return "view";
+        return "products/view";
     }
 }

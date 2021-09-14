@@ -1,6 +1,7 @@
 package academy.Motorola.controller.admin;
 
 import academy.Motorola.entity.Product;
+import academy.Motorola.service.CategoryService;
 import academy.Motorola.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +16,11 @@ import javax.validation.Valid;
 public class AdminProductController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-    public AdminProductController(ProductService productService) {
+    public AdminProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/")
@@ -30,6 +33,7 @@ public class AdminProductController {
     @GetMapping("/add")
     public String showAddForm(Model model){
         model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryService.getAll());
         return "admin/products/add";
     }
 
@@ -45,6 +49,7 @@ public class AdminProductController {
     @GetMapping("/edit/{id}")
     public String showEditForm (@PathVariable long id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("categories", categoryService.getAll());
         return "admin/products/edit";
     }
 

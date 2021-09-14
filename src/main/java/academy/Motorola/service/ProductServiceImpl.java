@@ -22,6 +22,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductsByCategory(long id) {
+        return productRepository.findProductsByCategoryId(id);
+    }
+
+    @Override
     public Product getProductById(long id) {
         var product = productRepository.findProductById(id);
         if (product == null) {
@@ -36,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
+        p.setCategoryId(product.getCategoryId());
         productRepository.save(p);
     }
 
@@ -48,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
+        p.setCategoryId(product.getCategoryId());
         productRepository.save(p);
     }
 

@@ -26,6 +26,10 @@ public class Product {
     @Digits(integer=3, fraction=2)
     private BigDecimal price;
 
+    @Column(name = "category_id")
+    @NotNull
+    private long categoryId;
+
     public Product() {
     }
 
@@ -59,5 +63,13 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
     }
 }
