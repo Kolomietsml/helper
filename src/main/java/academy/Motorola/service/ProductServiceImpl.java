@@ -47,10 +47,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(Product product, long id) {
-        var p = productRepository.findProductById(id);
-        if (p == null) {
-            throw new EntityNotFoundException("Product not found");
-        }
+        var p = getProductById(id);
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
@@ -60,10 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProductById(long id) {
-        var product = productRepository.findProductById(id);
-        if (product == null) {
-            throw new EntityNotFoundException("Product not found");
-        }
+        var product = getProductById(id);
         productRepository.delete(product);
     }
 }

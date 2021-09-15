@@ -7,9 +7,9 @@
 </head>
 <body>
 
-<h1>Online food store</h1>
+    <h1>Online food store</h1>
 
-<h3>Categories</h3>
+    <h3>Categories</h3>
 
     <table>
         <tbody>
@@ -17,10 +17,10 @@
             <td><a th:href="@{/products/category/{id}(id=${category.id})}" th:text="${category.name}"></a></td>
         </tr>
         </tbody>
-
     </table>
 
     <p><a th:href="@{/}">Main</a></p>
+    <p><a th:href="@{/cart/}">Cart</a></p>
 
 </body>
 </html>

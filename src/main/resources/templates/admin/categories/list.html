@@ -7,30 +7,30 @@
 </head>
 <body>
 
-<h1>Admin panel</h1>
+    <h1>Admin panel</h1>
 
-<h3>Categories</h3>
+    <h3>Categories</h3>
 
-<p><a th:href="@{/admin/categories/add}">Add category</a></p>
+    <p><a th:href="@{/admin/categories/add}">Add category</a></p>
 
-<table>
-    <tbody>
-    <tr th:each="category: ${categories}">
-        <td th:text="${category.name}">Name</td>
-        <td>
-            <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}">Edit</a>
-        </td>
-        <td>
-            <form th:action="@{/admin/categories/delete/{id}(id=${category.id})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
+    <table>
+        <tbody>
+        <tr th:each="category: ${categories}">
+            <td th:text="${category.name}">Name</td>
+            <td>
+                <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}">Edit</a>
+            </td>
+            <td>
+                <form th:action="@{/admin/categories/delete/{id}(id=${category.id})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
 
-</table>
+    </table>
 
-<p><a th:href="@{/admin/}">Main</a></p>
+    <p><a th:href="@{/admin/}">Main</a></p>
 
 </body>
 </html>

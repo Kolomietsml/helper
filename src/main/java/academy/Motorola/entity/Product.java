@@ -72,4 +72,20 @@ public class Product {
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+
+        Product product = (Product) o;
+
+        return getId() == product.getId();
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (getId() ^ (getId() >>> 32));
+    }
 }

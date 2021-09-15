@@ -7,40 +7,40 @@
 </head>
 <body>
 
-<h1>Admin panel</h1>
+    <h1>Admin panel</h1>
 
-<h3>Products</h3>
+    <h3>Products</h3>
 
-<p><a th:href="@{/admin/products/add}">Add product</a></p>
+    <p><a th:href="@{/admin/products/add}">Add product</a></p>
 
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-    </tr>
-    </thead>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        </thead>
 
-    <tbody>
-    <tr th:each="product: ${products}">
-        <td th:text="${product.name}">Name</td>
-        <td th:text="${product.description}">Description</td>
-        <td th:text="${product.price}">Price</td>
-        <td>
-            <a th:href="@{/admin/products/edit/{id}(id=${product.id})}">Edit</a>
-        </td>
-        <td>
-            <form th:action="@{/admin/products/delete/{id}(id=${product.id})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
+        <tbody>
+        <tr th:each="product: ${products}">
+            <td th:text="${product.name}">Name</td>
+            <td th:text="${product.description}">Description</td>
+            <td th:text="${product.price}">Price</td>
+            <td>
+                <a th:href="@{/admin/products/edit/{id}(id=${product.id})}">Edit</a>
+            </td>
+            <td>
+                <form th:action="@{/admin/products/delete/{id}(id=${product.id})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
 
-</table>
+    </table>
 
-<p><a th:href="@{/admin/}">Main</a></p>
+    <p><a th:href="@{/admin/}">Main</a></p>
 
 </body>
 </html>

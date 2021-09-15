@@ -1,7 +1,6 @@
 package academy.Motorola.controller.admin;
 
 import academy.Motorola.entity.Category;
-import academy.Motorola.entity.Product;
 import academy.Motorola.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +32,8 @@ public class AdminCategoriesController {
     }
 
     @PostMapping("/add")
-    public String addCategory(@Valid @ModelAttribute("category") Category category, BindingResult result) {
+    public String addCategory(@Valid @ModelAttribute("category") Category category,
+                              BindingResult result) {
         if (result.hasErrors()) {
             return "admin/categories/add";
         }
@@ -48,7 +48,8 @@ public class AdminCategoriesController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateCategory(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable long id){
+    public String updateCategory(@Valid @ModelAttribute("category") Category category,
+                                 BindingResult result, @PathVariable long id){
         if (result.hasErrors()) {
             return "admin/categories/edit";
         }
@@ -61,6 +62,4 @@ public class AdminCategoriesController {
         categoryService.deleteCategoryById(id);
         return "redirect:/admin/categories/";
     }
-
-
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
 @Controller
 @RequestMapping("/admin/products/")
 public class AdminProductController {
@@ -18,7 +17,8 @@ public class AdminProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    public AdminProductController(ProductService productService, CategoryService categoryService) {
+    public AdminProductController(ProductService productService,
+                                  CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
@@ -33,13 +33,15 @@ public class AdminProductController {
     @GetMapping("/add")
     public String showAddForm(Model model){
         model.addAttribute("product", new Product());
-        model.addAttribute("categories", categoryService.getAll());
+        getCategories(model);
         return "admin/products/add";
     }
 
     @PostMapping("/add")
-    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
+    public String addProduct(@Valid @ModelAttribute("product") Product product,
+                             BindingResult result, Model model) {
         if (result.hasErrors()) {
+            getCategories(model);
             return "admin/products/add";
         }
         productService.addProduct(product);
@@ -49,13 +51,15 @@ public class AdminProductController {
     @GetMapping("/edit/{id}")
     public String showEditForm (@PathVariable long id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
-        model.addAttribute("categories", categoryService.getAll());
+        getCategories(model);
         return "admin/products/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, @PathVariable long id){
+    public String updateProduct(@Valid @ModelAttribute("product") Product product,
+                                BindingResult result, @PathVariable long id, Model model){
         if (result.hasErrors()) {
+            getCategories(model);
             return "admin/products/edit";
         }
         productService.updateProduct(product, id);
@@ -66,5 +70,9 @@ public class AdminProductController {
     public String deleteProduct(@PathVariable long id) {
         productService.deleteProductById(id);
         return "redirect:/admin/products/";
+    }
+
+    private void getCategories(Model model) {
+        model.addAttribute("categories", categoryService.getAll());
     }
 }

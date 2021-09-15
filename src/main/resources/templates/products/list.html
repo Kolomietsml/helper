@@ -7,9 +7,9 @@
 </head>
 <body>
 
-<h1>Online food store</h1>
+    <h1>Online food store</h1>
 
-<h3>Products</h3>
+    <h3>Products</h3>
 
     <table>
         <thead>
@@ -25,11 +25,17 @@
                 <td><a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}"></a></td>
                 <td th:text="${product.description}">Description</td>
                 <td th:text="${product.price}">Price</td>
+                <td>
+                    <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
+                        <button type="submit">Add to cart</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>
 
     <p><a th:href="@{/}">Main</a></p>
+    <p><a th:href="@{/cart/}">Cart</a></p>
 
 </body>
 </html>

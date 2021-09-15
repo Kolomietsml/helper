@@ -39,20 +39,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategory(Category category, long id) {
-        var c = categoryRepository.findCategoryById(id);
-        if (c == null) {
-            throw new EntityNotFoundException("Category not found");
-        }
+        var c = getCategoryById(id);
         c.setName(category.getName());
         categoryRepository.save(c);
     }
 
     @Override
     public void deleteCategoryById(long id) {
-        var category = categoryRepository.findCategoryById(id);
-        if (category == null) {
-            throw new EntityNotFoundException("Category not found");
-        }
+        var category = getCategoryById(id);
         categoryRepository.delete(category);
     }
 }
