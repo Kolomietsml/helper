@@ -36,6 +36,10 @@
     <p>Total:</p>
     <p th:text="${cart.getTotal()}"></p>
 
+    <form th:action="@{/orders/add/}" method="post">
+        <button type="submit">Order</button>
+    </form>
+
     <p><a th:href="@{/products/}">Continue shopping</a></p>
     <p><a th:href="@{/}">Main</a></p>
 
