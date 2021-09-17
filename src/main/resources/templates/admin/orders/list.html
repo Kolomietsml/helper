@@ -17,6 +17,7 @@
             <th>Id</th>
             <th>Date</th>
             <th>Amount</th>
+            <th>Status</th>
             <th>Details</th>
         </tr>
     </thead>
@@ -26,7 +27,9 @@
             <td th:text="${order.id}">Id</td>
             <td th:text="${order.date}">Date</td>
             <td th:text="${order.amount}">Amount</td>
+            <td th:text="${order.status.type}">Amount</td>
             <td><a th:href="@{/admin/orders/{id}(id=${order.id})}">More</a></td>
+            <td><a th:href="@{/admin/orders/edit/{id}(id=${order.id})}">Edit</a></td>
         </tr>
     </tbody>
 

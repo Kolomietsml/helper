@@ -1,12 +1,12 @@
 package academy.Motorola.controller.admin;
 
+import academy.Motorola.entity.Order;
+import academy.Motorola.enums.Status;
 import academy.Motorola.service.OrderDetailsService;
 import academy.Motorola.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/orders")
@@ -30,5 +30,19 @@ public class AdminOrdersController {
     public String getOrderDetails(@PathVariable long id, Model model) {
         model.addAttribute("order_details", orderDetailsService.getOrderDetailsByOrderId(id));
         return "admin/orders/view";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable long id, Model model) {
+        model.addAttribute("order", orderService.getOrderById(id));
+        model.addAttribute("statusTypes", Status.values());
+        return "admin/orders/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateOrder(@ModelAttribute("order")Order order,
+                              @PathVariable long id) {
+        orderService.updateOrder(id, order.getStatus());
+        return "redirect:/admin/orders/";
     }
 }

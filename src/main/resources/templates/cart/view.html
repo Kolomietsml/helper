@@ -11,34 +11,42 @@
 
     <h3>Cart</h3>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Total</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr th:each="item : ${cart.items}">
-                <td th:text="${item.key.name}">Name</td>
-                <td th:text="${item.value}">Quantity</td>
-                <td th:text="${item.value} * ${item.key.price}">Quantity</td>
-                <td>
-                    <form th:action="@{/cart/remove/{id}(id=${item.key.id})}" method="post">
-                        <button type="submit">-</button>
-                    </form>
-                </td>
+    <div th:if="${cart.items.size() > 0}">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Total</th>
             </tr>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${cart.items}">
+                    <td th:text="${item.key.name}">Name</td>
+                    <td th:text="${item.value}">Quantity</td>
+                    <td th:text="${item.value} * ${item.key.price}">Quantity</td>
+                    <td>
+                        <form th:action="@{/cart/remove/{id}(id=${item.key.id})}" method="post">
+                            <button type="submit">-</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <p>Total:</p>
-    <p th:text="${cart.getTotal()}"></p>
+        <p>Total:</p>
+        <p th:text="${cart.getTotal()}"></p>
 
-    <form th:action="@{/orders/add/}" method="post">
-        <button type="submit">Order</button>
-    </form>
+        <form th:action="@{/orders/add/}" method="post">
+            <button type="submit">Order</button>
+        </form>
+
+    </div>
+
+    <div th:unless="${cart.items.size() > 0}">
+        <p>Cart is empty</p>
+    </div>
 
     <p><a th:href="@{/products/}">Continue shopping</a></p>
     <p><a th:href="@{/}">Main</a></p>
