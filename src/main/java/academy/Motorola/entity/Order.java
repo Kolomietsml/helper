@@ -19,7 +19,7 @@ public class Order {
     private String date = setDate();
 
     @Column(name = "amount")
-    private BigDecimal amount
+    private BigDecimal amount;
     @Column(name = "status")
     private Status status;
 
