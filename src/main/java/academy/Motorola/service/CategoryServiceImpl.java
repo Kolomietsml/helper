@@ -31,17 +31,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void addCategory(Category category) {
+    public Category addCategory(Category category) {
         var c = new Category();
         c.setName(category.getName());
-        categoryRepository.save(c);
+        return categoryRepository.save(c);
     }
 
     @Override
-    public void updateCategory(Category category, long id) {
+    public Category updateCategory(Category category, long id) {
         var c = getCategoryById(id);
         c.setName(category.getName());
-        categoryRepository.save(c);
+        return categoryRepository.save(c);
     }
 
     @Override

@@ -36,23 +36,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(Product product) {
+    public Product addProduct(Product product) {
         var p = new Product();
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
         p.setCategoryId(product.getCategoryId());
-        productRepository.save(p);
+        return productRepository.save(p);
     }
 
     @Override
-    public void updateProduct(Product product, long id) {
+    public Product updateProduct(Product product, long id) {
         var p = getProductById(id);
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
         p.setCategoryId(product.getCategoryId());
-        productRepository.save(p);
+        return productRepository.save(p);
     }
 
     @Override

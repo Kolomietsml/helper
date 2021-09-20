@@ -13,6 +13,6 @@ public interface OrderService {
     List<Order> getAll();
     Order getOrderById(long id);
 
-    void addOrder(Map<Product, Integer> items, BigDecimal sum);
-    void updateOrder(long id, Status status);
+    Order addOrder(Map<Product, Integer> items, BigDecimal sum);
+    Order updateOrder(long id, Status status);
 }

@@ -1,4 +1,4 @@
-package academy.Motorola.bean;
+package academy.Motorola.service;
 
 import academy.Motorola.entity.Product;
 import org.springframework.stereotype.Component;

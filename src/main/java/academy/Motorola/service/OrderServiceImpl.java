@@ -38,19 +38,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addOrder(Map<Product, Integer> items, BigDecimal sum) {
-        if (!items.isEmpty()) {
-            var order = new Order();
-            order.setStatus(Status.OPEN);
-            order.setAmount(sum);
-            orderDetailsService.addOrderDetails(orderRepository.save(order).getId(), items);
-        }
+    public Order addOrder(Map<Product, Integer> items, BigDecimal sum) {
+        var order = new Order();
+        order.setStatus(Status.OPEN);
+        order.setAmount(sum);
+        var savedOrder = orderRepository.save(order);
+        orderDetailsService.addOrderDetails(savedOrder.getId(), items);
+        return savedOrder;
+
     }
 
     @Override
-    public void updateOrder(long id, Status status) {
+    public Order updateOrder(long id, Status status) {
         var order = getOrderById(id);
         order.setStatus(status);
-        orderRepository.save(order);
+        return orderRepository.save(order);
     }
 }

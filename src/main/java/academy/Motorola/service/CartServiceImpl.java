@@ -1,6 +1,5 @@
 package academy.Motorola.service;
 
-import academy.Motorola.bean.Cart;
 import academy.Motorola.entity.Product;
 import org.springframework.stereotype.Service;
 
