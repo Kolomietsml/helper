@@ -9,18 +9,23 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/admin/products")
-public class AdminProductsRestController {
+@RequestMapping("/api/admin/products")
+public class AdminProductsController {
 
     private final ProductService productService;
 
-    public AdminProductsRestController(ProductService productService) {
+    public AdminProductsController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping()
     public List<Product> getProducts() {
         return productService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable long id) {
+        return productService.getProductById(id);
     }
 
     @PostMapping()

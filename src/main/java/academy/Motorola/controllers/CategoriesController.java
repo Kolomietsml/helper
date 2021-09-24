@@ -10,11 +10,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/categories")
-public class CategoriesRestController {
+public class CategoriesController {
 
     private final CategoryService categoryService;
 
-    public CategoriesRestController(CategoryService categoryService) {
+    public CategoriesController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

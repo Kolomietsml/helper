@@ -14,10 +14,10 @@ import javax.validation.constraints.Size;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     @NotBlank(message = "Field is mandatory")
     @Size(min = 3, max = 50)
     private String name;

@@ -60,4 +60,9 @@ public class ProductServiceImpl implements ProductService {
         var product = getProductById(id);
         productRepository.delete(product);
     }
+
+    @Override
+    public void deleteAll() {
+        productRepository.deleteAll();
+    }
 }

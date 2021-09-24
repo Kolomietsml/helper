@@ -16,15 +16,15 @@ import java.util.Date;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private String date = setDate();
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private Status status;
 
     public Order() {

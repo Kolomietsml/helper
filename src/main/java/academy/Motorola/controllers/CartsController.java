@@ -9,12 +9,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/cart")
-public class CartRestController {
+public class CartsController {
 
     private final Cart cart;
     private final CartService cartService;
 
-    public CartRestController(Cart cart, CartService cartService) {
+    public CartsController(Cart cart, CartService cartService) {
         this.cart = cart;
         this.cartService = cartService;
     }

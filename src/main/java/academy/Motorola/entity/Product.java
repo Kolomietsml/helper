@@ -12,14 +12,14 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     @NotBlank(message = "Field is mandatory")
     @Size(min = 3, max = 30)
     private String name;
@@ -27,7 +27,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false)
     @Digits(integer=3, fraction=2)
@@ -38,5 +38,12 @@ public class Product {
     private long categoryId;
 
     public Product() {
+    }
+
+    public Product(String name, String description, BigDecimal price,long categoryId) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.categoryId = categoryId;
     }
 }

@@ -13,19 +13,19 @@ import java.math.BigDecimal;
 public class OrderDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "order_id")
+    @Column(name = "order_id", nullable = false)
     private long orderId;
 
-    @Column(name = "product_id")
+    @Column(name = "product_id", nullable = false)
     private long productId;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     public OrderDetails() {

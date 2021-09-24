@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/orders")
-public class OrdersRestController {
+public class OrdersController {
 
     private final Cart cart;
     private final OrderService orderService;
 
-    public OrdersRestController(Cart cart, OrderService orderService) {
+    public OrdersController(Cart cart, OrderService orderService) {
         this.cart = cart;
         this.orderService = orderService;
     }
