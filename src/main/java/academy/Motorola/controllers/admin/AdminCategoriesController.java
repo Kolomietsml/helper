@@ -2,6 +2,7 @@ package academy.Motorola.controllers.admin;
 
 import academy.Motorola.entity.Category;
 import academy.Motorola.service.CategoryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +37,9 @@ public class AdminCategoriesController {
         return ResponseEntity.ok(c);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable long id) {
+    public void deleteCategory(@PathVariable long id) {
         categoryService.deleteCategoryById(id);
-        return ResponseEntity.noContent().build();
     }
 }

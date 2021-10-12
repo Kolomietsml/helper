@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class ProductServiceImpUTest {
+class ProductServiceImpUnitTest {
 
     private ProductRepository productRepository = mock(ProductRepository.class);
 
@@ -24,13 +24,12 @@ class ProductServiceImpUTest {
     @Test
     void getAll_shouldReturnEmptyList() {
         // given
-        List<Product> products;
 
-        //when
-        products = productService.getAll();
+        // when
+        List<Product> expected = productService.getAll();
 
         // then
-        assertThat(products).isEmpty();
+        assertThat(expected).isEmpty();
     }
 
     @Test
@@ -38,13 +37,15 @@ class ProductServiceImpUTest {
         // given
         var p1 = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
         var p2 = new Product("Pepsi", "", new BigDecimal(7), 1);
-        List<Product> result = new ArrayList<>(Arrays.asList(p1, p2));
+        List<Product> actual = new ArrayList<>(Arrays.asList(p1, p2));
+        given(productRepository.findAll()).willReturn(actual);
 
         // when
-        given(productRepository.findAll()).willReturn(result);
+        List<Product> expected = productService.getAll();
 
         // then
-        assertEquals(productService.getAll().size(), 2);
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -52,13 +53,14 @@ class ProductServiceImpUTest {
         // given
         var p1 = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
         var p2 = new Product("Pepsi", "", new BigDecimal(7), 1);
-        List<Product> result = new ArrayList<>(Arrays.asList(p1, p2));
+        List<Product> actual = new ArrayList<>(Arrays.asList(p1, p2));
+        given(productRepository.findProductsByCategoryId(1)).willReturn(actual);
 
         // when
-        given(productRepository.findProductsByCategoryId(1)).willReturn(result);
+        List<Product> expected = productService.getProductsByCategory(2);
 
         // then
-        assertThat(productService.getProductsByCategory(2)).isEmpty();
+        assertThat(expected).isEmpty();
     }
 
     @Test
@@ -66,13 +68,14 @@ class ProductServiceImpUTest {
         // given
         var p1 = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
         var p2 = new Product("Pepsi", "", new BigDecimal(7), 1);
-        List<Product> result = new ArrayList<>(Arrays.asList(p1, p2));
+        List<Product> actual = new ArrayList<>(Arrays.asList(p1, p2));
+        given(productRepository.findProductsByCategoryId(1)).willReturn(actual);
 
         // when
-        given(productRepository.findProductsByCategoryId(1)).willReturn(result);
+        List<Product> expected = productService.getProductsByCategory(1);
 
         // then
-        assertEquals(productService.getProductsByCategory(1).size(), 2);
+        assertEquals(expected.size(), actual.size());
     }
 
     @Test()
@@ -85,26 +88,29 @@ class ProductServiceImpUTest {
     @Test()
     void getProductById() {
         // given
-        var expected = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
-        expected.setId(1);
         var actual = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
         actual.setId(1);
+        given(productRepository.findProductById(1)).willReturn(actual);
 
         // when
-        given(productRepository.findProductById(1)).willReturn(expected);
+        Product expected = productService.getProductById(1);
 
         // then
-        assertEquals(productService.getProductById(1),  actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     void addProduct() {
+        // given
         var unsaved = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
         var saved = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
         saved.setId(1);
-
         given(productRepository.save(unsaved)).willReturn(saved);
 
-        assertEquals(productService.addProduct(unsaved), saved);
+        // when
+        Product expected = productService.addProduct(unsaved);
+
+        // then
+        assertEquals(expected, saved);
     }
 }

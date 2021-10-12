@@ -19,7 +19,7 @@ public class Category {
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Field is mandatory")
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50, message = "Length must be greater than 3 and less 50")
     private String name;
 
     public Category() {

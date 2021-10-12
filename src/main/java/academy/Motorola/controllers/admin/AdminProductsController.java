@@ -2,6 +2,7 @@ package academy.Motorola.controllers.admin;
 
 import academy.Motorola.entity.Product;
 import academy.Motorola.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,9 +42,9 @@ public class AdminProductsController {
         return ResponseEntity.ok(p);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable long id) {
+    public void deleteProduct(@PathVariable long id) {
         productService.deleteProductById(id);
-        return ResponseEntity.noContent().build();
     }
 }

@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AdminProductsControllerUTest {
+class AdminProductsControllerUnitTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -35,10 +35,11 @@ class AdminProductsControllerUTest {
 
     @Test
     void addProduct() throws Exception {
+        // given
         var product = createTestProduct();
-
         when(productService.addProduct(any())).thenReturn(product);
 
+        // when then
         mockMvc.perform(
                 post("/api/admin/products")
                         .content(objectMapper.writeValueAsString(product))
@@ -49,10 +50,11 @@ class AdminProductsControllerUTest {
 
     @Test
     void getProduct() throws Exception {
+        // given
         var product = createTestProduct();
-
         when(productService.getProductById(product.getId())).thenReturn(product);
 
+        // when then
         mockMvc.perform(
                 get("/api/admin/products/{id}", product.getId()))
                 .andExpect(status().isOk())
@@ -64,10 +66,11 @@ class AdminProductsControllerUTest {
     }
 
     @Test
-    void getProduct_EntityNotFoundException() throws Exception {
-
+    void getProduct_shouldThrowEntityNotFoundException() throws Exception {
+        // given
         when(productService.getProductById(anyLong())).thenThrow(EntityNotFoundException.class);
 
+        // when then
         mockMvc.perform(
                 get("/api/admin/products/1"))
                 .andExpect(status().isNotFound())
@@ -76,13 +79,13 @@ class AdminProductsControllerUTest {
 
     @Test
     void updateProduct() throws Exception {
+        // given
         var product = createTestProduct();
-
         var p = new Product("Coca-Cola", "Diet", new BigDecimal(7), 1);
-
         when(productService.addProduct(product)).thenReturn(product);
         when(productService.updateProduct(p, product.getId())).thenReturn(p);
 
+        // when then
         mockMvc.perform(
                 put("/api/admin/products/{id}", product.getId())
                         .content(objectMapper.writeValueAsString(p))
@@ -97,6 +100,9 @@ class AdminProductsControllerUTest {
 
     @Test
     void deleteProduct() throws Exception {
+        //given
+
+        //when then
         mockMvc.perform(
                 delete("/api/admin/products/1"))
                 .andExpect(status().isNoContent());

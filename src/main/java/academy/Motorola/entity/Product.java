@@ -21,7 +21,7 @@ public class Product {
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Field is mandatory")
-    @Size(min = 3, max = 30)
+    @Size(min = 3, max = 30, message = "Length must be greater than 3 and less 30")
     private String name;
 
     @Column(name = "description")
@@ -29,7 +29,7 @@ public class Product {
 
     @Column(name = "price", nullable = false)
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = false)
+    @DecimalMin(value = "0.0", inclusive = false, message = "Must be greater than 0")
     @Digits(integer=3, fraction=2)
     private BigDecimal price;
 
