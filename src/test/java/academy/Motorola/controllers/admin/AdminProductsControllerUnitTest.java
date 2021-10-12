@@ -81,7 +81,7 @@ class AdminProductsControllerUnitTest {
     void updateProduct() throws Exception {
         // given
         var product = createTestProduct();
-        var p = new Product("Coca-Cola", "Diet", new BigDecimal(7), 1);
+        var p = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(7), 1);
         when(productService.addProduct(product)).thenReturn(product);
         when(productService.updateProduct(p, product.getId())).thenReturn(p);
 
@@ -113,7 +113,7 @@ class AdminProductsControllerUnitTest {
         product.setId(1);
         product.setName("Coca-Cola");
         product.setDescription("");
-        product.setPrice(new BigDecimal(5));
+        product.setPrice(BigDecimal.valueOf(5));
         product.setCategoryId(1);
         return product;
     }

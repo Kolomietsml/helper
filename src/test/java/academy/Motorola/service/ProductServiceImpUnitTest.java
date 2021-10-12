@@ -35,8 +35,8 @@ class ProductServiceImpUnitTest {
     @Test
     void getAll() {
         // given
-        var p1 = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
-        var p2 = new Product("Pepsi", "", new BigDecimal(7), 1);
+        var p1 = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(5), 1);
+        var p2 = new Product("Pepsi", "", BigDecimal.valueOf(7), 1);
         List<Product> actual = new ArrayList<>(Arrays.asList(p1, p2));
         given(productRepository.findAll()).willReturn(actual);
 
@@ -51,8 +51,8 @@ class ProductServiceImpUnitTest {
     @Test
     void getProductsByCategory_shouldReturnEmptyList() {
         // given
-        var p1 = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
-        var p2 = new Product("Pepsi", "", new BigDecimal(7), 1);
+        var p1 = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(5), 1);
+        var p2 = new Product("Pepsi", "", BigDecimal.valueOf(7), 1);
         List<Product> actual = new ArrayList<>(Arrays.asList(p1, p2));
         given(productRepository.findProductsByCategoryId(1)).willReturn(actual);
 
@@ -66,8 +66,8 @@ class ProductServiceImpUnitTest {
     @Test
     void getProductsByCategory() {
         // given
-        var p1 = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
-        var p2 = new Product("Pepsi", "", new BigDecimal(7), 1);
+        var p1 = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(5), 1);
+        var p2 = new Product("Pepsi", "", BigDecimal.valueOf(7), 1);
         List<Product> actual = new ArrayList<>(Arrays.asList(p1, p2));
         given(productRepository.findProductsByCategoryId(1)).willReturn(actual);
 
@@ -88,7 +88,7 @@ class ProductServiceImpUnitTest {
     @Test()
     void getProductById() {
         // given
-        var actual = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
+        var actual = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(5), 1);
         actual.setId(1);
         given(productRepository.findProductById(1)).willReturn(actual);
 
@@ -102,8 +102,8 @@ class ProductServiceImpUnitTest {
     @Test
     void addProduct() {
         // given
-        var unsaved = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
-        var saved = new Product("Coca-Cola", "Diet", new BigDecimal(5), 1);
+        var unsaved = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(5), 1);
+        var saved = new Product("Coca-Cola", "Diet", BigDecimal.valueOf(5), 1);
         saved.setId(1);
         given(productRepository.save(unsaved)).willReturn(saved);
 

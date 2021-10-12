@@ -39,7 +39,7 @@ class AdminProductsControllerIntegrationTest {
     @Test
     void addProduct() throws Exception {
         // given
-        var product = new Product("Coca-Cola", "", new BigDecimal(5), 1);
+        var product = new Product("Coca-Cola", "", BigDecimal.valueOf(5), 1);
 
         // when then
         mockMvc.perform(
@@ -126,7 +126,7 @@ class AdminProductsControllerIntegrationTest {
     }
 
     private Product createTestProduct() {
-        var product = new Product("Coca-Cola", "", new BigDecimal(5), 1);
+        var product = new Product("Coca-Cola", "", BigDecimal.valueOf(5), 1);
         return productService.addProduct(product);
     }
 }
