@@ -11,9 +11,9 @@
 	</parent>
 
 	<groupId>academy</groupId>
-	<artifactId>Motorola</artifactId>
+	<artifactId>productstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MotorolaAcademy</name>
+	<name>ProductStore</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
