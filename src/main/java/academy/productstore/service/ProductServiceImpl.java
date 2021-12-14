@@ -1,7 +1,10 @@
 package academy.productstore.service;
 
+import academy.productstore.entity.Category;
 import academy.productstore.entity.Product;
 import academy.productstore.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -11,9 +14,12 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository,
+                              CategoryService categoryService) {
         this.productRepository = productRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -22,8 +28,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategory(long id) {
-        return productRepository.findProductsByCategoryId(id);
+    public Page<Product> getProductsByCategory(long id, Pageable pageable) {
+        return productRepository.findProductsByCategoryId(id, pageable);
+    }
+
+    @Override
+    public Page<Product> search(String keyword, Pageable pageable) {
+        return productRepository.search(keyword, pageable);
     }
 
     @Override
@@ -41,7 +52,10 @@ public class ProductServiceImpl implements ProductService {
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
-        p.setCategoryId(product.getCategoryId());
+
+        Category category = categoryService.getCategoryById(product.getCategory().getId());
+        p.setCategory(category);
+
         return productRepository.save(p);
     }
 
@@ -51,7 +65,10 @@ public class ProductServiceImpl implements ProductService {
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
-        p.setCategoryId(product.getCategoryId());
+
+        Category category = categoryService.getCategoryById(product.getCategory().getId());
+        p.setCategory(category);
+
         return productRepository.save(p);
     }
 

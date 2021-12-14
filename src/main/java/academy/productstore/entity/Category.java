@@ -1,16 +1,20 @@
 package academy.productstore.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Category {
 
     @Id
@@ -22,6 +26,6 @@ public class Category {
     @Size(min = 3, max = 50, message = "Length must be greater than 3 and less 50")
     private String name;
 
-    public Category() {
-    }
+    @OneToMany(mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
 }

@@ -1,17 +1,22 @@
 package academy.productstore.repository;
 
 import academy.productstore.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT p FROM Product p WHERE p.id = :id")
-    Product findProductById(@Param("id") long id);
+    @EntityGraph(attributePaths = {"category"}, type= EntityGraph.EntityGraphType.FETCH)
+    Product findProductById(long id);
 
-    @Query("SELECT p FROM Product p WHERE p.categoryId = :id")
-    List<Product> findProductsByCategoryId(@Param("id") long id);
+    @EntityGraph(attributePaths = {"category"}, type= EntityGraph.EntityGraphType.FETCH)
+    Page<Product> findProductsByCategoryId(long id, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"category"})
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
+    Page<Product> search(@Param("keyword") String keyword, Pageable pageable);
 }

@@ -1,37 +1,39 @@
 package academy.productstore.controllers;
 
+import academy.productstore.assemblers.CartAssembler;
+import academy.productstore.dto.CartDTO;
 import academy.productstore.service.Cart;
-import academy.productstore.entity.Product;
 import academy.productstore.service.CartService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("api/cart")
+@RequestMapping("api/v1/cart")
 public class CartsController {
 
     private final Cart cart;
     private final CartService cartService;
+    private final CartAssembler assembler;
 
-    public CartsController(Cart cart, CartService cartService) {
+    public CartsController(Cart cart, CartService cartService, CartAssembler assembler) {
         this.cart = cart;
         this.cartService = cartService;
+        this.assembler = assembler;
     }
 
     @GetMapping("/")
-    public Map<Product, Integer> showCart() {
-        return cart.getItems();
+    public ResponseEntity<CartDTO> showCart() {
+        return ResponseEntity.ok(assembler.toModel(cart));
     }
 
-    @PostMapping("/add/{id}")
-    public Map<Product, Integer> addProductToCart(@PathVariable long id) {
-        return cartService.addProductToCart(cart, id).getItems();
+    @PostMapping("/{id}")
+    public ResponseEntity<CartDTO> addProductToCart(@PathVariable long id) {
+        return ResponseEntity.ok(assembler.toModel(cartService.addProductToCart(cart, id)));
 
     }
 
-    @PutMapping("/remove/{id}")
-    public Map<Product, Integer> removeProductFromCart(@PathVariable long id) {
-        return cartService.removeProductFromCart(cart, id).getItems();
+    @PutMapping("/{id}")
+    public ResponseEntity<CartDTO> removeProductFromCart(@PathVariable long id) {
+        return ResponseEntity.ok(assembler.toModel(cartService.removeProductFromCart(cart, id)));
     }
 }

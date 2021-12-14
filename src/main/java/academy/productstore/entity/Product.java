@@ -1,7 +1,7 @@
 package academy.productstore.entity;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Getter
 @Setter
-@EqualsAndHashCode
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -30,20 +30,25 @@ public class Product {
     @Column(name = "price", nullable = false)
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false, message = "Must be greater than 0")
-    @Digits(integer=3, fraction=2)
+    @Digits(integer = 3, fraction = 2)
     private BigDecimal price;
 
-    @Column(name = "category_id")
-    @NotNull
-    private long categoryId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
-    public Product() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return getId() == product.getId();
     }
 
-    public Product(String name, String description, BigDecimal price,long categoryId) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.categoryId = categoryId;
+    @Override
+    public int hashCode() {
+        return (int) (getId() ^ (getId() >>> 32));
     }
 }
