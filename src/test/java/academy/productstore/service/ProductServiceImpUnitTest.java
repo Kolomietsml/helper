@@ -1,8 +1,8 @@
 package academy.productstore.service;
 
-import academy.productstore.entity.Category;
-import academy.productstore.entity.Product;
-import academy.productstore.repository.ProductRepository;
+import academy.productstore.persistence.entity.Category;
+import academy.productstore.persistence.entity.Product;
+import academy.productstore.persistence.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
