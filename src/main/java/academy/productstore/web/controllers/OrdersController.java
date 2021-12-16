@@ -3,7 +3,7 @@ package academy.productstore.web.controllers;
 import academy.productstore.service.Cart;
 import academy.productstore.service.OrderService;
 import academy.productstore.web.assemblers.OrderAssembler;
-import academy.productstore.web.dto.OrderDTO;
+import academy.productstore.web.dto.response.OrderDTO;
 import lombok.SneakyThrows;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.image.BufferedImage;
 
 @RestController
-@RequestMapping("api/v1/orders")
+@RequestMapping("/orders")
 public class OrdersController {
 
     private final Cart cart;

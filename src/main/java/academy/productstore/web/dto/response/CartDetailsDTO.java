@@ -1,4 +1,4 @@
-package academy.productstore.web.dto;
+package academy.productstore.web.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

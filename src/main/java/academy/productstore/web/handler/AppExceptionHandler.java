@@ -1,6 +1,8 @@
 package academy.productstore.web.handler;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,23 +15,32 @@ import java.util.Map;
 @ControllerAdvice
 public class AppExceptionHandler {
 
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<Object> handleBindException(final BindException ex) {
+        final BindingResult result = ex.getBindingResult();
+        return ResponseEntity.status(400).body(getErrors(result));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex) {
+        final BindingResult result = ex.getBindingResult();
+        return ResponseEntity.status(400).body(getErrors(result));
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFound(final EntityNotFoundException ex) {
         return ResponseEntity.status(404).body(ex.getMessage());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationExceptions(final MethodArgumentNotValidException ex) {
+    private Map<String, String> getErrors(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+        result.getAllErrors().forEach((error) -> {
+            if (error instanceof FieldError) {
+                errors.put(((FieldError) error).getField(), error.getDefaultMessage());
+            } else {
+                errors.put(error.getObjectName(), error.getDefaultMessage());
+            }
         });
-
-        return ResponseEntity.status(400).body(errors);
+        return errors;
     }
 }
-
-

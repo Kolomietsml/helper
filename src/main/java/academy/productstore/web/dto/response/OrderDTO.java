@@ -1,4 +1,4 @@
-package academy.productstore.web.dto;
+package academy.productstore.web.dto.response;
 
 import academy.productstore.persistence.entity.Status;
 import lombok.Builder;

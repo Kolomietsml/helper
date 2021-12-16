@@ -1,7 +1,7 @@
 package academy.productstore.web.controllers;
 
 import academy.productstore.web.assemblers.ProductAssembler;
-import academy.productstore.web.dto.ProductDTO;
+import academy.productstore.web.dto.response.ProductDTO;
 import academy.productstore.persistence.entity.Product;
 import academy.productstore.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/")
 public class ProductsController {
 
     private final ProductService productService;

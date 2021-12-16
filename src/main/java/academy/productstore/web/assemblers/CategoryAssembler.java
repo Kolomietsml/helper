@@ -2,7 +2,7 @@ package academy.productstore.web.assemblers;
 
 import academy.productstore.web.controllers.CategoriesController;
 import academy.productstore.web.controllers.ProductsController;
-import academy.productstore.web.dto.CategoryDTO;
+import academy.productstore.web.dto.response.CategoryDTO;
 import academy.productstore.persistence.entity.Category;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
