@@ -1,6 +1,6 @@
 package academy.productstore.validation;
 
-import academy.productstore.web.dto.request.CreateAccountDTO;
+import academy.productstore.web.dto.CreateAccountDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

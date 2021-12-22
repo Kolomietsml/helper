@@ -1,7 +1,7 @@
 package academy.productstore.web.controllers;
 
 import academy.productstore.service.AccountService;
-import academy.productstore.web.dto.request.CreateAccountDTO;
+import academy.productstore.web.dto.CreateAccountDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -2,7 +2,7 @@ package academy.productstore.service;
 
 import academy.productstore.persistence.entity.Account;
 import academy.productstore.persistence.repository.AccountRepository;
-import academy.productstore.web.dto.request.CreateAccountDTO;
+import academy.productstore.web.dto.CreateAccountDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

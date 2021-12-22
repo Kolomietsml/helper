@@ -9,5 +9,4 @@ class MotorolaAcademyApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

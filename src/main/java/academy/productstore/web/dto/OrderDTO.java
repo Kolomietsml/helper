@@ -1,4 +1,4 @@
-package academy.productstore.web.dto.response;
+package academy.productstore.web.dto;
 
 import academy.productstore.persistence.entity.Status;
 import lombok.Builder;
@@ -18,5 +18,6 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
     private String realizationDate;
     private BigDecimal amount;
     private Status status;
-    private List<OrderDetailsDTO> details;
+    private List<ItemDTO> items;
+    private DeliveryDetailsDTO deliveryDetails;
 }

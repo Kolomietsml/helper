@@ -1,4 +1,4 @@
-package academy.productstore.web.dto.request;
+package academy.productstore.web.dto;
 
 import academy.productstore.validation.PasswordMatches;
 import academy.productstore.validation.ValidEmail;

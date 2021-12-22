@@ -1,4 +1,4 @@
-package academy.productstore.web.dto.response;
+package academy.productstore.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +13,6 @@ import java.util.List;
 @Builder
 public class CartDTO extends RepresentationModel<CartDTO> {
 
-    private List<CartDetailsDTO> products;
+    private List<ItemDTO> items;
     private BigDecimal amount;
 }

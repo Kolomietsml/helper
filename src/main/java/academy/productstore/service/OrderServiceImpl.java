@@ -1,10 +1,9 @@
 package academy.productstore.service;
 
-import academy.productstore.persistence.entity.Order;
-import academy.productstore.persistence.entity.OrderDetails;
-import academy.productstore.persistence.entity.Product;
-import academy.productstore.persistence.entity.Status;
+import academy.productstore.persistence.entity.*;
 import academy.productstore.persistence.repository.OrderRepository;
+import academy.productstore.web.dto.CreateOrderDTO;
+import academy.productstore.web.dto.ItemDTO;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -24,14 +23,17 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final AccountService accountService;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            AccountService accountService) {
         this.orderRepository = orderRepository;
+        this.accountService = accountService;
     }
 
     @Override
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    public List<Order> getAllOrdersByAccountId(long id) {
+        return orderRepository.findAllByAccount_Id(id);
     }
 
     @Override
@@ -44,11 +46,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order addOrder(Map<Product, Integer> items, BigDecimal sum) {
+    public CreateOrderDTO checkout(Map<Product, Integer> items, BigDecimal sum, long id) {
+        var account = accountService.getAccount(id);
+        return CreateOrderDTO.builder()
+                .items(getItemsDTO(items))
+                .amount(sum)
+                .firstname(account.getFirstname())
+                .lastname(account.getLastname())
+                .phone(account.getPhone())
+                .build();
+    }
+
+    @Override
+    public Order addOrder(CreateOrderDTO dto, long id) {
+        var account = accountService.getAccount(id);
         var order = new Order();
-        order.setStatus(Status.OPEN);
-        order.setAmount(sum);
-        order.setDetails(getDetails(items));
+        order.setAmount(dto.getAmount());
+        order.setItems(getItems(dto.getItems()));
+        order.setDeliveryDetails(createDeliveryDetails(dto));
+        order.setAccount(account);
         return orderRepository.save(order);
     }
 
@@ -63,19 +79,42 @@ public class OrderServiceImpl implements OrderService {
     public BufferedImage generateQRCode(long id) throws WriterException {
         var order = getOrderById(id);
         QRCodeWriter barcodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = barcodeWriter.encode(order.getCode().toString(), BarcodeFormat.QR_CODE, 200, 200);
+        BitMatrix bitMatrix = barcodeWriter.encode(order.getCode(), BarcodeFormat.QR_CODE, 200, 200);
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
     }
 
-    private Set<OrderDetails> getDetails(Map<Product, Integer> items) {
-        return items.entrySet().stream().map(this::getDetail).collect(Collectors.toSet());
+    private Set<OrderItem> getItems(List<ItemDTO> items) {
+        return items.stream().map(this::getItem).collect(Collectors.toSet());
     }
 
-    private OrderDetails getDetail(Map.Entry<Product, Integer> entry) {
-        var orderDetails = new OrderDetails();
-        orderDetails.setTitle(entry.getKey().getName());
-        orderDetails.setQuantity(entry.getValue());
-        orderDetails.setPrice(entry.getKey().getPrice());
+    private OrderItem getItem(ItemDTO dto) {
+        var orderDetails = new OrderItem();
+        orderDetails.setTitle(dto.getName());
+        orderDetails.setQuantity(dto.getQuantity());
+        orderDetails.setPrice(dto.getPrice());
         return orderDetails;
+    }
+
+    private List<ItemDTO> getItemsDTO(Map<Product, Integer> items) {
+        return items.entrySet().stream().map(this::getItemDTO).collect(Collectors.toList());
+    }
+
+    private ItemDTO getItemDTO(Map.Entry<Product, Integer> entry) {
+        return ItemDTO.builder()
+                .name(entry.getKey().getName())
+                .price(entry.getKey().getPrice())
+                .quantity(entry.getValue())
+                .build();
+    }
+
+    private DeliveryDetails createDeliveryDetails(CreateOrderDTO dto) {
+        var details = new DeliveryDetails();
+        details.setFirstName(dto.getFirstname());
+        details.setLastname(dto.getLastname());
+        details.setPhone(dto.getPhone());
+        details.setStreet(dto.getStreet());
+        details.setBuild(dto.getBuild());
+        details.setApartment(dto.getApartment());
+        return details;
     }
 }

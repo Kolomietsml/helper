@@ -18,10 +18,10 @@ public class AdminOrdersController {
         this.orderService = orderService;
     }
 
-    @GetMapping()
-    public List<Order> getOrders() {
-        return orderService.getAll();
-    }
+//    @GetMapping()
+//    public List<Order> getOrders() {
+//        return orderService.getAll();
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@Valid @RequestBody Order order,

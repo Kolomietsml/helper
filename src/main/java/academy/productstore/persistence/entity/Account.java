@@ -56,6 +56,10 @@ public class Account implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = Collections.singleton(new Role(1L, "ROLE_USER"));
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();

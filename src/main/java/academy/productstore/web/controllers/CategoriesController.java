@@ -1,7 +1,7 @@
 package academy.productstore.web.controllers;
 
 import academy.productstore.web.assemblers.CategoryAssembler;
-import academy.productstore.web.dto.response.CategoryDTO;
+import academy.productstore.web.dto.CategoryDTO;
 import academy.productstore.service.CategoryService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -23,7 +23,7 @@ public class Order {
     private long id;
 
     @Column(name = "uuid", nullable = false)
-    private UUID code = UUID.randomUUID();
+    private String code = UUID.randomUUID().toString();
 
     @Column(name = "ordering_date", nullable = false)
     private String orderingDate = setDate();
@@ -35,11 +35,19 @@ public class Order {
     private BigDecimal amount;
 
     @Column(name = "status", nullable = false)
-    private Status status;
+    private Status status = Status.OPEN;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
-    private Set<OrderDetails> details;
+    private Set<OrderItem> items;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_details_id", referencedColumnName = "id")
+    private DeliveryDetails deliveryDetails;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 
     public String setDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

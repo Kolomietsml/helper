@@ -36,4 +36,10 @@ public class CartServiceImpl implements CartService {
         }
         return cart;
     }
+
+    @Override
+    public Cart removeAll(Cart cart) {
+        cart.getItems().clear();
+        return cart;
+    }
 }
