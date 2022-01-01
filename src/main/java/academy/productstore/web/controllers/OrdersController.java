@@ -1,16 +1,18 @@
 package academy.productstore.web.controllers;
 
-import academy.productstore.persistence.entity.Account;
+import academy.productstore.persistence.entity.Order;
 import academy.productstore.service.Cart;
 import academy.productstore.service.OrderService;
 import academy.productstore.web.assemblers.OrderAssembler;
 import academy.productstore.web.dto.CreateOrderDTO;
 import academy.productstore.web.dto.OrderDTO;
 import lombok.SneakyThrows;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,20 +35,17 @@ public class AccountOrdersController {
     }
 
     @GetMapping("/{user_id}/orders")
-    public CollectionModel<OrderDTO> getOrdersByAccount(@PathVariable("user_id") long id) {
-        return assembler.toCollectionModel(orderService.getAllOrdersByAccountId(id));
+    public PagedModel<OrderDTO> getOrdersByAccount(@PathVariable("user_id") long id,
+                                                   Pageable pageable,
+                                                   PagedResourcesAssembler<Order> pagedResourcesAssembler) {
+        Page<Order> orders = orderService.getAllOrdersByAccountId(id, pageable);
+        return pagedResourcesAssembler.toModel(orders, assembler);
     }
 
-    @GetMapping("/orders/{id}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable long id) {
+    @GetMapping("/{user_id}/orders/{id}")
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable("id") long id) {
         var order = orderService.getOrderById(id);
         return ResponseEntity.ok(assembler.toModel(order));
-    }
-
-    @GetMapping("/checkout")
-    public ResponseEntity<CreateOrderDTO> orderConfirmation(@AuthenticationPrincipal Account account) {
-        var dto = orderService.checkout(cart.getItems(), cart.getTotal(), account.getId());
-        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/{id}/orders")
