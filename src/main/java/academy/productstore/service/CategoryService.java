@@ -12,4 +12,6 @@ public interface CategoryService {
     Category addCategory(Category category);
     Category updateCategory(Category category, long id);
     void deleteCategoryById(long id);
+
+    void deleteAll();
 }
