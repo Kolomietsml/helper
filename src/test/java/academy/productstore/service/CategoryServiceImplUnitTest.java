@@ -2,8 +2,6 @@ package academy.productstore.service;
 
 import academy.productstore.persistence.entity.Category;
 import academy.productstore.persistence.repository.CategoryRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,26 +25,8 @@ class CategoryServiceImplUnitTest {
     @InjectMocks
     private CategoryServiceImpl service;
 
-    private Category category;
-    private List<Category> categories;
-
-    @BeforeEach
-    void setUp() {
-        category = new Category();
-        category.setId(1L);
-        category.setName("Beverages");
-
-        categories = List.of(category);
-    }
-
-    @AfterEach
-    void tearDown() {
-        category = null;
-        categories = null;
-    }
-
     @Test
-    void getAll_shouldReturnEmptyList() {
+    void getAll_shouldReturnsEmptyList() {
         // given
 
         // when
@@ -58,15 +38,18 @@ class CategoryServiceImplUnitTest {
     }
 
     @Test
-    void getAll_shouldReturnListWithCategories() {
+    void getAll_shouldReturnsListWithCategories() {
         // given
+        List<Category> categories = List.of(
+                createTestCategory(1, "Beverages"),
+                createTestCategory(2, "Fats and oils"));
         given(mockRepository.findAll()).willReturn(categories);
 
         // when
         List<Category> actual = service.getAll();
 
         // then
-        assertEquals(1, actual.size());
+        assertEquals(2, actual.size());
         verify(mockRepository, times(1)).findAll();
     }
 
@@ -84,23 +67,24 @@ class CategoryServiceImplUnitTest {
     }
 
     @Test
-    void getCategoryById_shouldReturnCategory() {
+    void getCategoryById_shouldReturnsCategory() {
         // given
-        long id = 1;
-        given(mockRepository.findCategoryById(id)).willReturn(category);
+        var category = createTestCategory(1, "Beverages");
+        given(mockRepository.findCategoryById(category.getId())).willReturn(category);
 
         // when
-        Category actual = service.getCategoryById(id);
+        Category actual = service.getCategoryById(category.getId());
 
         // then
         assertEquals(1, actual.getId());
         assertEquals("Beverages", actual.getName());
-        verify(mockRepository, times(1)).findCategoryById(id);
+        verify(mockRepository, times(1)).findCategoryById(category.getId());
     }
 
     @Test
-    void addCategory_shouldReturnCategory() {
+    void addCategory_shouldReturnsCategory() {
         // given
+        var category = createTestCategory(1, "Beverages");
         given(mockRepository.save(any(Category.class))).willReturn(category);
 
         // when
@@ -115,61 +99,67 @@ class CategoryServiceImplUnitTest {
     @Test
     void updateCategory_shouldThrowsEntityNotFoundException() {
         // given
-        long id = anyLong();
+        var category = createTestCategory(1, "Beverages");
 
         // when
         EntityNotFoundException exception =
-                assertThrows(EntityNotFoundException.class, () -> service.updateCategory(category, id));
+                assertThrows(EntityNotFoundException.class, () -> service.updateCategory(category, 2));
 
         // then
         assertEquals("Category not found", exception.getMessage());
-        verify(mockRepository, times(1)).findCategoryById(id);
+        verify(mockRepository, times(1)).findCategoryById(2);
         verify(mockRepository, times(0)).save(any(Category.class));
     }
 
     @Test
-    void updateCategory_shouldReturnCategory() {
+    void updateCategory_shouldReturnsCategory() {
         // given
-        long id = 1;
-        given(mockRepository.findCategoryById(id)).willReturn(category);
+        var category = createTestCategory(1, "Beverages");
+        given(mockRepository.findCategoryById(category.getId())).willReturn(category);
         given(mockRepository.save(any(Category.class))).willReturn(category);
 
         // when
-        Category actual = service.updateCategory(category, id);
+        Category actual = service.updateCategory(category, category.getId());
 
         // then
         assertEquals(1, actual.getId());
         assertEquals("Beverages", actual.getName());
-        verify(mockRepository, times(1)).findCategoryById(id);
+        verify(mockRepository, times(1)).findCategoryById(category.getId());
         verify(mockRepository, times(1)).save(any(Category.class));
     }
 
     @Test
     void deleteCategory_shouldThrowsEntityNotFoundException() {
         // given
-        long id = anyLong();
 
         // when
         EntityNotFoundException exception =
-                assertThrows(EntityNotFoundException.class, () -> service.deleteCategoryById(id));
+                assertThrows(EntityNotFoundException.class, () -> service.deleteCategoryById(2));
 
         // then
         assertEquals("Category not found", exception.getMessage());
-        verify(mockRepository, times(1)).findCategoryById(id);
+        verify(mockRepository, times(1)).findCategoryById(2);
         verify(mockRepository, times(0)).delete(any(Category.class));
     }
 
     @Test
     void deleteCategory() {
         // given
-        long id = 1;
-        given(mockRepository.findCategoryById(id)).willReturn(category);
+        var category = createTestCategory(1, "Beverages");
+        given(mockRepository.findCategoryById(category.getId())).willReturn(category);
 
         // when
-        service.deleteCategoryById(1);
+        service.deleteCategoryById(category.getId());
 
         // then
-        verify(mockRepository, times(1)).findCategoryById(id);
+        verify(mockRepository, times(1)).findCategoryById(category.getId());
         verify(mockRepository, times(1)).delete(category);
+    }
+
+    private Category createTestCategory(long id, String name) {
+        var category = new Category();
+        category.setId(id);
+        category.setName(name);
+        return category;
     }
 }
