@@ -33,31 +33,24 @@ class CategoriesControllerIntegrationTest {
 
     @Test
     void getCategories() throws Exception {
-
         // given
         createTestCategory("Beverages");
         createTestCategory("Fats and oils");
 
-        String url = "/categories";
-
         // when
 
         // then
-        mockMvc.perform(get(url).contentType(MediaTypes.HAL_JSON))
-
+        mockMvc.perform(get("/categories").contentType(MediaTypes.HAL_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaTypes.HAL_JSON))
                 .andExpect(jsonPath("_embedded.categories", hasSize(2)))
-
                 .andExpect(jsonPath("_embedded.categories[0].name").value("Beverages"))
                 .andExpect(jsonPath("_embedded.categories[0]._links.self.href", containsString("/categories/1/products")))
                 .andExpect(jsonPath("_embedded.categories[0]._links.self.type").value("GET"))
-
                 .andExpect(jsonPath("_embedded.categories[1].name").value("Fats and oils"))
                 .andExpect(jsonPath("_embedded.categories[1]._links.self.href", containsString("/categories/2/products")))
                 .andExpect(jsonPath("_embedded.categories[1]._links.self.type").value("GET"))
-
-                .andExpect(jsonPath("_links.self.href", containsString(url)))
+                .andExpect(jsonPath("_links.self.href", containsString("/categories")))
                 .andExpect(jsonPath("_links.self.type").value("GET"))
                 .andDo(print());
     }

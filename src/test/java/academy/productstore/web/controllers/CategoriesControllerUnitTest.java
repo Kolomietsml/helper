@@ -31,34 +31,26 @@ class CategoriesControllerUnitTest {
 
     @Test
     void getCategories() throws Exception {
-
         // given
-        List<Category> list = List.of(
-                createTestCategory(1L, "Beverages"),
-                createTestCategory(2L, "Fats and oils"));
-
-        when(mockService.getAll()).thenReturn(list);
-
-        String url = "/categories";
+        List<Category> categories = List.of(
+                createTestCategory(1, "Beverages"),
+                createTestCategory(2, "Fats and oils"));
+        when(mockService.getAll()).thenReturn(categories);
 
         // when
 
         // then
-        mockMvc.perform(get(url).contentType(MediaTypes.HAL_JSON_VALUE))
-
+        mockMvc.perform(get("/categories").contentType(MediaTypes.HAL_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaTypes.HAL_JSON_VALUE))
                 .andExpect(jsonPath("_embedded.categories", hasSize(2)))
-
                 .andExpect(jsonPath("_embedded.categories[0].name").value("Beverages"))
                 .andExpect(jsonPath("_embedded.categories[0]._links.self.href", containsString("/categories/1/products")))
                 .andExpect(jsonPath("_embedded.categories[0]._links.self.type").value("GET"))
-
                 .andExpect(jsonPath("_embedded.categories[1].name").value("Fats and oils"))
                 .andExpect(jsonPath("_embedded.categories[1]._links.self.href", containsString("/categories/2/products")))
                 .andExpect(jsonPath("_embedded.categories[1]._links.self.type").value("GET"))
-
-                .andExpect(jsonPath("_links.self.href", containsString(url)))
+                .andExpect(jsonPath("_links.self.href", containsString("/categories")))
                 .andExpect(jsonPath("_links.self.type").value("GET"))
                 .andDo(print());
     }
