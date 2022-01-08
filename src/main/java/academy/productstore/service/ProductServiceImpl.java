@@ -2,7 +2,6 @@ package academy.productstore.service;
 
 import academy.productstore.persistence.entity.Category;
 import academy.productstore.persistence.entity.Product;
-import academy.productstore.persistence.repository.CategoryRepository;
 import academy.productstore.persistence.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,18 +9,17 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     public ProductServiceImpl(ProductRepository productRepository,
-                              CategoryRepository categoryRepository) {
+                              CategoryService categoryService) {
         this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
 
-        Category category = getOrCreateCategory(product.getCategory());
+        Category category = categoryService.getCategoryById(product.getCategory().getId());
         p.setCategory(category);
 
         return productRepository.save(p);
@@ -68,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
 
-        Category category = getOrCreateCategory(product.getCategory());
+        Category category = categoryService.getCategoryById(product.getCategory().getId());
         p.setCategory(category);
 
         return productRepository.save(p);
@@ -83,22 +81,5 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteAll() {
         productRepository.deleteAll();
-    }
-
-    private Category getOrCreateCategory(Category c) {
-        Category category;
-        if(c.getId() != 0) {
-            Optional<Category> optional = categoryRepository.findById(c.getId());
-            if(optional.isPresent()){
-                category = optional.get();
-                return category;
-            } else {
-                category = new Category();
-            }
-        } else {
-            category = new Category();
-        }
-        category.setName(c.getName());
-        return category;
     }
 }

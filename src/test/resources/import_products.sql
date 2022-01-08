@@ -1,0 +1,1 @@
+INSERT INTO products(id, name, description, price, category_id) VALUES (2, 'Coca-Cola', '', 0.5, 1);

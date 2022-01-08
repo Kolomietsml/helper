@@ -2,7 +2,6 @@ package academy.productstore.service;
 
 import academy.productstore.persistence.entity.Category;
 import academy.productstore.persistence.entity.Product;
-import academy.productstore.persistence.repository.CategoryRepository;
 import academy.productstore.persistence.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,7 +33,7 @@ class ProductServiceImpUnitTest {
     private ProductRepository mockRepository;
 
     @Mock
-    private CategoryRepository mockCategoryRepository;
+    private CategoryService mockCategoryService;
 
     @InjectMocks
     private ProductServiceImpl service;
@@ -133,7 +131,7 @@ class ProductServiceImpUnitTest {
         assertEquals("Coca-Cola", actual.getName());
         assertEquals(BigDecimal.valueOf(0.5), actual.getPrice());
         assertEquals(1, actual.getCategory().getId());
-        verify(mockCategoryRepository, times(1)).findById(product.getCategory().getId());
+        verify(mockCategoryService, times(1)).getCategoryById(product.getCategory().getId());
         verify(mockRepository, times(1)).save(any(Product.class));
     }
 
@@ -142,7 +140,7 @@ class ProductServiceImpUnitTest {
         // given
         var product = createTestProduct(2, "Coca-Cola", "Diet", BigDecimal.valueOf(0.5));
         given(mockRepository.findProductById(product.getId())).willReturn(product);
-        given(mockCategoryRepository.findById(product.getCategory().getId())).willReturn(Optional.of(product.getCategory()));
+        given(mockCategoryService.getCategoryById(product.getCategory().getId())).willReturn(product.getCategory());
         given(mockRepository.save(any(Product.class))).willReturn(product);
 
         // when
@@ -154,7 +152,7 @@ class ProductServiceImpUnitTest {
         assertEquals(BigDecimal.valueOf(0.5), actual.getPrice());
         assertEquals(1, actual.getCategory().getId());
         verify(mockRepository, times(1)).findProductById(product.getId());
-        verify(mockCategoryRepository, times(1)).findById(product.getCategory().getId());
+        verify(mockCategoryService, times(1)).getCategoryById(product.getCategory().getId());
         verify(mockRepository, times(1)).save(any(Product.class));
     }
 
@@ -170,7 +168,7 @@ class ProductServiceImpUnitTest {
         // then
         assertEquals("Product not found", exception.getMessage());
         verify(mockRepository, times(1)).findProductById(1);
-        verify(mockCategoryRepository, times(0)).findById(product.getId());
+        verify(mockCategoryService, times(0)).getCategoryById(product.getCategory().getId());
         verify(mockRepository, times(0)).save(any(Product.class));
     }
 
