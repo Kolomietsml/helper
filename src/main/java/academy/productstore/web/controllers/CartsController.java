@@ -1,9 +1,8 @@
 package academy.productstore.web.controllers;
 
+import academy.productstore.service.cart.CartService;
 import academy.productstore.web.assemblers.CartAssembler;
 import academy.productstore.web.dto.CartDTO;
-import academy.productstore.service.Cart;
-import academy.productstore.service.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,33 +12,31 @@ import java.util.HashMap;
 @RequestMapping("/cart")
 public class CartsController {
 
-    private final Cart cart;
-    private final CartService cartService;
+    private final CartService service;
     private final CartAssembler assembler;
 
-    public CartsController(Cart cart, CartService cartService, CartAssembler assembler) {
-        this.cart = cart;
-        this.cartService = cartService;
+    public CartsController(CartService service, CartAssembler assembler) {
+        this.service = service;
         this.assembler = assembler;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<CartDTO> showCart() {
-        return ResponseEntity.ok(assembler.toModel(cart));
+        return ResponseEntity.ok(assembler.toModel(service.getCart()));
     }
 
     @PostMapping()
     public ResponseEntity<CartDTO> addProductToCart(@RequestBody HashMap<String, Long> request) {
-        return ResponseEntity.ok(assembler.toModel(cartService.addProductToCart(cart, request.get("id"))));
+        return ResponseEntity.ok(assembler.toModel(service.addItem(request.get("id"))));
     }
 
     @PutMapping()
     public ResponseEntity<CartDTO> removeProductFromCart(@RequestBody HashMap<String, Long> request) {
-        return ResponseEntity.ok(assembler.toModel(cartService.removeProductFromCart(cart, request.get("id"))));
+        return ResponseEntity.ok(assembler.toModel(service.removeItem(request.get("id"))));
     }
 
     @DeleteMapping()
     public ResponseEntity<CartDTO> removeAllProductsFromCart() {
-        return ResponseEntity.ok(assembler.toModel(cartService.removeAll(cart)));
+        return ResponseEntity.ok(assembler.toModel(service.removeAllItems()));
     }
 }
