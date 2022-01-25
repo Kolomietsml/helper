@@ -1,6 +1,6 @@
 package academy.productstore.service.cart;
 
-import academy.productstore.persistence.entity.Product;
+import academy.productstore.domain.Product;
 import academy.productstore.service.ProductService;
 import org.springframework.stereotype.Service;
 

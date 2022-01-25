@@ -1,6 +1,6 @@
 package academy.productstore.service.cart;
 
-import academy.productstore.persistence.entity.Product;
+import academy.productstore.domain.Product;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package academy.productstore.service;
 
-import academy.productstore.persistence.entity.Category;
-import academy.productstore.persistence.entity.Product;
-import academy.productstore.persistence.repository.ProductRepository;
+import academy.productstore.domain.Category;
+import academy.productstore.domain.Product;
+import academy.productstore.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

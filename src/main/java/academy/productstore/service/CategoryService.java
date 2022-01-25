@@ -1,6 +1,6 @@
 package academy.productstore.service;
 
-import academy.productstore.persistence.entity.Category;
+import academy.productstore.domain.Category;
 
 import java.util.List;
 

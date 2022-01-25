@@ -1,7 +1,7 @@
 package academy.productstore.service;
 
-import academy.productstore.persistence.entity.Category;
-import academy.productstore.persistence.repository.CategoryRepository;
+import academy.productstore.domain.Category;
+import academy.productstore.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

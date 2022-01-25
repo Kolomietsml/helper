@@ -1,6 +1,6 @@
 package academy.productstore.service;
 
-import academy.productstore.persistence.entity.Product;
+import academy.productstore.domain.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

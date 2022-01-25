@@ -1,24 +1,20 @@
 package academy.productstore.service;
 
-import academy.productstore.persistence.entity.Order;
-import academy.productstore.persistence.entity.Product;
-import academy.productstore.persistence.entity.Status;
-import academy.productstore.web.dto.CreateOrderDTO;
+import academy.productstore.domain.Order;
+import academy.productstore.domain.Status;
+import academy.productstore.service.cart.Cart;
 import com.google.zxing.WriterException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.awt.image.BufferedImage;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
 
 public interface OrderService {
 
-    List<Order> getAllOrdersByAccountId(long id);
+    Page<Order> getAllOrdersByAccountId(long id, Pageable pageable);
     Order getOrderById(long id);
 
-    CreateOrderDTO checkout(Map<Product, Integer> items, BigDecimal sum, long id);
-
-    Order addOrder(CreateOrderDTO dto, long id);
+    Order addOrder(Cart cart, long id);
     Order updateOrder(long id, Status status);
 
     BufferedImage generateQRCode(long id) throws WriterException;

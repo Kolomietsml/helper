@@ -1,6 +1,6 @@
 package academy.productstore.validation;
 
-import academy.productstore.web.dto.CreateAccountDTO;
+import academy.productstore.dto.CreateAccountDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
