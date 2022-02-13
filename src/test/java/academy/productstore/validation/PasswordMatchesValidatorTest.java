@@ -1,6 +1,6 @@
 package academy.productstore.validation;
 
-import academy.productstore.dto.CreateAccountDTO;
+import academy.productstore.dto.request.RegistrationRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,8 +21,8 @@ class PasswordMatchesValidatorTest {
         assertFalse(validator.isValid(account, null));
     }
 
-    private CreateAccountDTO createTestObject(String password, String passwordConfirm) {
-        var account = new CreateAccountDTO();
+    private RegistrationRequest createTestObject(String password, String passwordConfirm) {
+        var account = new RegistrationRequest();
         account.setFirstname("FirstName");
         account.setLastname("LastName");
         account.setEmail("test@mail.com");

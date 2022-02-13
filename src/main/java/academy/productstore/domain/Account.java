@@ -2,8 +2,9 @@ package academy.productstore.domain;
 
 import academy.productstore.validation.ValidEmail;
 import academy.productstore.validation.ValidPhoneNumber;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,7 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Account {
 

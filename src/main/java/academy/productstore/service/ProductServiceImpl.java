@@ -3,6 +3,7 @@ package academy.productstore.service;
 import academy.productstore.domain.Category;
 import academy.productstore.domain.Product;
 import academy.productstore.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,16 +12,11 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
-
-    public ProductServiceImpl(ProductRepository productRepository,
-                              CategoryService categoryService) {
-        this.productRepository = productRepository;
-        this.categoryService = categoryService;
-    }
 
     @Override
     public List<Product> getAll() {

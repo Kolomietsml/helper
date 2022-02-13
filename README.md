@@ -12,5 +12,4 @@
 - Maven
 - PostgreSQL
 - H2
-- Redis
 ---

@@ -1,6 +1,6 @@
 package academy.productstore.validation;
 
-import academy.productstore.dto.CreateAccountDTO;
+import academy.productstore.dto.request.RegistrationRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -9,7 +9,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-        var accountDTO = (CreateAccountDTO) o;
+        var accountDTO = (RegistrationRequest) o;
         return accountDTO.getPassword().equals(accountDTO.getPasswordConfirm());
     }
 }
