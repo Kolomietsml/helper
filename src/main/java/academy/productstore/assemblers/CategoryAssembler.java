@@ -17,6 +17,7 @@ public class CategoryAssembler implements RepresentationModelAssembler<Category,
     @Override
     public CategoryResponse toModel(Category category) {
         var categoryResponse = CategoryResponse.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .build();
 

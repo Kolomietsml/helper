@@ -1,6 +1,5 @@
 package academy.productstore.service;
 
-import academy.productstore.domain.Category;
 import academy.productstore.domain.Product;
 import academy.productstore.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,10 +47,6 @@ public class ProductServiceImpl implements ProductService {
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
-
-        Category category = categoryService.getCategoryById(product.getCategory().getId());
-        p.setCategory(category);
-
         return productRepository.save(p);
     }
 
@@ -61,10 +56,6 @@ public class ProductServiceImpl implements ProductService {
         p.setName(product.getName());
         p.setDescription(product.getDescription());
         p.setPrice(product.getPrice());
-
-        Category category = categoryService.getCategoryById(product.getCategory().getId());
-        p.setCategory(category);
-
         return productRepository.save(p);
     }
 
@@ -77,5 +68,29 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteAll() {
         productRepository.deleteAll();
+    }
+
+    @Override
+    public Product addProductToCategory(long productId, long categoryId) {
+        var product = getProductById(productId);
+        var category = categoryService.getCategoryById(categoryId);
+
+        if (product.getCategory() != null && product.getCategory().equals(category)) {
+            return product;
+        }
+        product.setCategory(category);
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product removeProductFromCategory(long productId, long categoryId) {
+        var product = getProductById(productId);
+        var category = categoryService.getCategoryById(categoryId);
+
+        if (!product.getCategory().equals(category)) {
+            return product;
+        }
+        product.setCategory(null);
+        return productRepository.save(product);
     }
 }

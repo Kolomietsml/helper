@@ -19,10 +19,11 @@ public class ProductAssembler implements RepresentationModelAssembler<Product, P
     @Override
     public ProductResponse toModel(Product product) {
         var productResponse =  ProductResponse.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
-                .category(categoryAssembler.toModel(product.getCategory()))
+                .category((product.getCategory() != null ? categoryAssembler.toModel(product.getCategory()) : null))
                 .build();
 
         productResponse.add(linkTo(methodOn(ProductResource.class)

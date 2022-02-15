@@ -18,4 +18,7 @@ public interface ProductService {
     void deleteProductById(long id);
 
     void deleteAll();
+
+    Product addProductToCategory(long productId, long categoryId);
+    Product removeProductFromCategory(long productId, long categoryId);
 }

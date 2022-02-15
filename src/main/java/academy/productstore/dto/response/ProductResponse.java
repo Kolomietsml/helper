@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Builder
 public class ProductResponse extends RepresentationModel<ProductResponse> {
 
+    private long id;
     private String name;
     private String description;
     private BigDecimal price;

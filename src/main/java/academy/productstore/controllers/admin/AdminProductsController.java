@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -46,5 +47,19 @@ public class AdminProductsController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable long id) {
         productService.deleteProductById(id);
+    }
+
+    @PatchMapping("/{id}/categories")
+    public ResponseEntity<Product> addProductToCategory(@PathVariable long id,
+                                                        @RequestBody HashMap<String, Long> request) {
+        var product = productService.addProductToCategory(id, request.get("id"));
+        return ResponseEntity.ok(product);
+    }
+
+    @DeleteMapping("/{id}/categories")
+    public ResponseEntity<Product> removeLabelFromRelease(@PathVariable long id,
+                                                          @RequestBody HashMap<String, Long> request) {
+        var product = productService.removeProductFromCategory(id, request.get("id"));
+        return ResponseEntity.ok(product);
     }
 }

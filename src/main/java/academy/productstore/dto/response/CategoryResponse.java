@@ -10,5 +10,6 @@ import org.springframework.hateoas.server.core.Relation;
 @Builder
 public class CategoryResponse extends RepresentationModel<CategoryResponse> {
 
+    private long id;
     private String name;
 }
