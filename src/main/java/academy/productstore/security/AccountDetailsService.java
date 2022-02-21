@@ -34,6 +34,6 @@ public class AccountDetailsService implements UserDetailsService {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         account.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
 
-        return new User(account.getPhone(), account.getPassword(), authorities);
+        return new User(String.valueOf(account.getId()), account.getPassword(), authorities);
     }
 }

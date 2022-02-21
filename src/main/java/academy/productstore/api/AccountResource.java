@@ -28,7 +28,7 @@ public class AccountResource {
         return ResponseEntity.created(uri).body(accountAssembler.toModel(account));
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/accounts/{id}")
     public ResponseEntity<AccountResponse> getAccountInfo(@PathVariable long id) {
         var account = accountService.getAccount(id);
         return ResponseEntity.ok(accountAssembler.toModel(account));
