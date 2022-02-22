@@ -3,11 +3,11 @@ package academy.productstore.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class OrderRequest {
+public class ItemRequest {
 
-    private List<ItemRequest> items;
+    private long productId;
+
+    private int quantity;
 }

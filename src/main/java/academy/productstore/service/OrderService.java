@@ -14,7 +14,7 @@ public interface OrderService {
     Page<Order> getAllOrdersByAccountId(long id, Pageable pageable);
     Order getOrderById(long id);
 
-    Order addOrder(OrderRequest orderRequest, long id);
+    Order addOrder(OrderRequest orderRequest, long accountId);
     Order updateOrder(long id, Status status);
 
     BufferedImage generateQRCode(long id) throws WriterException;

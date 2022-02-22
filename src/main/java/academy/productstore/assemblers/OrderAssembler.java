@@ -1,6 +1,6 @@
 package academy.productstore.assemblers;
 
-import academy.productstore.api.OrderResource;
+import academy.productstore.api.AccountOrdersResource;
 import academy.productstore.domain.Order;
 import academy.productstore.domain.OrderItem;
 import academy.productstore.dto.response.ItemResponse;
@@ -29,8 +29,13 @@ public class OrderAssembler implements RepresentationModelAssembler<Order, Order
                 .items(getDetails(order.getItems()))
                 .build();
 
-        orderResponse.add(linkTo(methodOn(OrderResource.class)
-                .generateQRCode(order.getId()))
+        orderResponse.add(linkTo(methodOn(AccountOrdersResource.class)
+                .getOrderById(order.getAccountId(), order.getId()))
+                .withSelfRel()
+                .withType("GET"));
+
+        orderResponse.add(linkTo(methodOn(AccountOrdersResource.class)
+                .generateQRCode(order.getAccountId(), order.getId()))
                 .withRel("qr_code")
                 .withType("GET"));
 
