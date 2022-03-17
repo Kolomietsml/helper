@@ -1,4 +1,4 @@
-# product store
+# Helper app for Ukrainian refugees in Poland
 
 ##### Technologies:
 

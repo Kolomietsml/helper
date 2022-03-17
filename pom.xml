@@ -10,10 +10,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>academy</groupId>
-	<artifactId>productstore</artifactId>
+	<groupId>dns</groupId>
+	<artifactId>helper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ProductStore</name>
+	<name>Helper</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -21,6 +21,7 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -35,7 +36,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.3.1</version>
+			<version>42.3.3</version>
 		</dependency>
 
 		<!-- Validation -->
@@ -85,7 +86,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>4.2.0</version>
+			<version>4.3.1</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -107,17 +108,6 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>3.4.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>3.4.1</version>
-		</dependency>
 	</dependencies>
 
 	<build>
