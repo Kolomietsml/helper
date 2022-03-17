@@ -26,11 +26,6 @@ public class LinkAssembler implements RepresentationModelAssembler<Link, LinkRes
                 .withSelfRel()
                 .withType("GET"));
 
-//        response.add(linkTo(methodOn(LinkResource.class)
-//                .addLink(new LinkRequest()))
-//                .withRel("add")
-//                .withType("POST"));
-
         response.add(linkTo(methodOn(LinkResource.class)
                 .updateLinkById(new LinkRequest(), entity.getId()))
                 .withRel("update")
@@ -41,6 +36,13 @@ public class LinkAssembler implements RepresentationModelAssembler<Link, LinkRes
 
     @Override
     public CollectionModel<LinkResponse> toCollectionModel(Iterable<? extends Link> entities) {
-        return RepresentationModelAssembler.super.toCollectionModel(entities);
+        CollectionModel<LinkResponse> links = RepresentationModelAssembler.super.toCollectionModel(entities);
+
+        links.add(linkTo(methodOn(LinkResource.class)
+        .addLink(new LinkRequest()))
+        .withRel("add")
+        .withType("POST"));
+
+        return links;
     }
 }

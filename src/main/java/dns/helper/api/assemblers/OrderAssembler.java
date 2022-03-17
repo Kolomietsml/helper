@@ -28,11 +28,6 @@ public class OrderAssembler implements RepresentationModelAssembler<Order, Order
                 .withType("GET"));
 
         response.add(linkTo(methodOn(OrderResource.class)
-                .addOrder(new OrderRequest()))
-                .withRel("add")
-                .withType("POST"));
-
-        response.add(linkTo(methodOn(OrderResource.class)
                 .updateOrderById(new OrderRequest(), entity.getId()))
                 .withRel("update")
                 .withType("PUT"));
@@ -47,6 +42,13 @@ public class OrderAssembler implements RepresentationModelAssembler<Order, Order
 
     @Override
     public CollectionModel<OrderResponse> toCollectionModel(Iterable<? extends Order> entities) {
-        return RepresentationModelAssembler.super.toCollectionModel(entities);
+        CollectionModel<OrderResponse> orders = RepresentationModelAssembler.super.toCollectionModel(entities);
+
+        orders.add(linkTo(methodOn(OrderResource.class)
+        .addOrder(new OrderRequest()))
+        .withRel("add")
+        .withType("POST"));
+
+        return orders;
     }
 }

@@ -26,11 +26,6 @@ public class EmergencyAssembler implements RepresentationModelAssembler<Emergenc
                 .withSelfRel()
                 .withType("GET"));
 
-//        response.add(linkTo(methodOn(EmergencyResource.class)
-//                .addEmergency(new EmergencyRequest()))
-//                .withRel("add")
-//                .withType("POST"));
-
         response.add(linkTo(methodOn(EmergencyResource.class)
                 .updateEmergencyById(new EmergencyRequest(), entity.getId()))
                 .withRel("update")
@@ -41,6 +36,13 @@ public class EmergencyAssembler implements RepresentationModelAssembler<Emergenc
 
     @Override
     public CollectionModel<EmergencyResponse> toCollectionModel(Iterable<? extends Emergency> entities) {
-        return RepresentationModelAssembler.super.toCollectionModel(entities);
+        CollectionModel<EmergencyResponse> emergencies = RepresentationModelAssembler.super.toCollectionModel(entities);
+
+        emergencies.add(linkTo(methodOn(EmergencyResource.class)
+                .addEmergency(new EmergencyRequest()))
+                .withRel("add")
+                .withType("POST"));
+
+        return emergencies;
     }
 }

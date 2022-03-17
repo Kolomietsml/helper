@@ -7,6 +7,7 @@
 - Spring Boot
 - Spring Data JPA
 - Spring Security
+- Telegram Bot API
 - Lombok
 - HATEOAS
 - Maven
