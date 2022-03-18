@@ -12,8 +12,8 @@ public class MarkupServiceImpl implements MarkupService {
     @Override
     public ReplyKeyboardMarkup getKeyBoard() {
         var keyboardRows = List.of(
-                createRow("Корисна інформація"),
-                createRow("Номери телефонів екстреної допомоги"));
+                createRow(Command.LINKS.getType()),
+                createRow(Command.EMERGENCIES.getType()));
 
         return ReplyKeyboardMarkup.builder()
                 .keyboard(keyboardRows)

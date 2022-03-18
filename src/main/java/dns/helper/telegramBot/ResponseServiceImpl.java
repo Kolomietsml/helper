@@ -19,13 +19,13 @@ public class ResponseServiceImpl implements ResponseService {
     @Override
     public String getResponse(String text) {
         if ("/start".equals(text)) {
-            return "Привіт";
-        }  else if ("Корисна інформація".equals(text)) {
+            return Command.GREETINGS.getType();
+        }  else if (Command.LINKS.getType().equals(text)) {
             return linkService.getAll().stream().map(this::getLinkInfo).collect(Collectors.joining());
-        } else if ("Номери телефонів екстреної допомоги".equals(text)) {
+        } else if (Command.EMERGENCIES.getType().equals(text)) {
             return emergencyService.getAll().stream().map(this::getEmergencyInfo).collect(Collectors.joining());
         } else {
-            return  "Command not found";
+            return Command.NOTFOUND.getType();
         }
     }
 
@@ -34,6 +34,6 @@ public class ResponseServiceImpl implements ResponseService {
     }
 
     private String getEmergencyInfo(Emergency emergency) {
-        return String.format("%s - <i>%s</i>\n\n", emergency.getPhone(), emergency.getTitle());
+        return String.format("%s - %s\n\n", emergency.getPhone(), emergency.getTitle());
     }
 }
