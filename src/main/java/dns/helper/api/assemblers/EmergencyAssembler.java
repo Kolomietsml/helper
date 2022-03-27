@@ -1,9 +1,9 @@
 package dns.helper.api.assemblers;
 
-import dns.helper.api.resources.EmergencyResource;
-import dns.helper.db.domain.Emergency;
 import dns.helper.api.dto.request.EmergencyRequest;
 import dns.helper.api.dto.response.EmergencyResponse;
+import dns.helper.api.resources.EmergencyResource;
+import dns.helper.db.domain.Emergency;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -31,12 +31,22 @@ public class EmergencyAssembler implements RepresentationModelAssembler<Emergenc
                 .withRel("update")
                 .withType("PUT"));
 
+        response.add(linkTo(methodOn(EmergencyResource.class)
+                .deleteEmergencyById(entity.getId()))
+                .withRel("delete")
+                .withType("DELETE"));
+
         return response;
     }
 
     @Override
     public CollectionModel<EmergencyResponse> toCollectionModel(Iterable<? extends Emergency> entities) {
         CollectionModel<EmergencyResponse> emergencies = RepresentationModelAssembler.super.toCollectionModel(entities);
+
+        emergencies.add(linkTo(methodOn(EmergencyResource.class)
+                .getEmergencies())
+                .withSelfRel()
+                .withType("GET"));
 
         emergencies.add(linkTo(methodOn(EmergencyResource.class)
                 .addEmergency(new EmergencyRequest()))

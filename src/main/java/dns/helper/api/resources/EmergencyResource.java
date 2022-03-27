@@ -6,9 +6,7 @@ import dns.helper.api.dto.response.EmergencyResponse;
 import dns.helper.service.EmergencyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,9 +43,9 @@ public class EmergencyResource {
         return ResponseEntity.ok(assembler.toModel(emergencyPhone));
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteEmergencyById(@PathVariable long id) {
+    public ResponseEntity<Object> deleteEmergencyById(@PathVariable long id) {
         service.deleteEmergencyById(id);
+        return ResponseEntity.noContent().build();
     }
 }

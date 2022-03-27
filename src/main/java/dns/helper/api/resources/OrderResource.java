@@ -46,7 +46,8 @@ public class OrderResource {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteOrderById(@PathVariable long id) {
+    public ResponseEntity<Object> deleteOrderById(@PathVariable long id) {
         service.deleteOrderById(id);
+        return ResponseEntity.noContent().build();
     }
 }

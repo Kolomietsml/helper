@@ -31,12 +31,22 @@ public class LinkAssembler implements RepresentationModelAssembler<Link, LinkRes
                 .withRel("update")
                 .withType("PUT"));
 
+        response.add(linkTo(methodOn(LinkResource.class)
+                .deleteLinkById(entity.getId()))
+                .withRel("delete")
+                .withType("DELETE"));
+
         return response;
     }
 
     @Override
     public CollectionModel<LinkResponse> toCollectionModel(Iterable<? extends Link> entities) {
         CollectionModel<LinkResponse> links = RepresentationModelAssembler.super.toCollectionModel(entities);
+
+        links.add(linkTo(methodOn(LinkResource.class)
+                .getLinks())
+                .withSelfRel()
+                .withType("GET"));
 
         links.add(linkTo(methodOn(LinkResource.class)
         .addLink(new LinkRequest()))

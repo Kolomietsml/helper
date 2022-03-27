@@ -17,7 +17,7 @@ public class EmergencyServiceImpl implements EmergencyService {
 
     @Override
     public List<Emergency> getAll() {
-        return repository.findAll();
+        return repository.findAllEmergencies();
     }
 
     @Override

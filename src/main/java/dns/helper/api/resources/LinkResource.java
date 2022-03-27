@@ -6,7 +6,6 @@ import dns.helper.api.dto.response.LinkResponse;
 import dns.helper.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +43,9 @@ public class LinkResource {
         return ResponseEntity.ok(assembler.toModel(link));
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteLinkById(@PathVariable long id) {
+    public ResponseEntity<Object> deleteLinkById(@PathVariable long id) {
         service.deleteLinkById(id);
+        return ResponseEntity.noContent().build();
     }
 }
