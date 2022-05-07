@@ -14,11 +14,12 @@ public class SendMessageServiceImpl implements SendMessageService {
 
     @Override
     public SendMessage send(Message message) {
+        String text = message.getText();
 
-        var keyboard = markupService.getKeyBoard();
+        var keyboard = markupService.getKeyBoard(text);
 
         return SendMessage.builder()
-                .text(responseService.getResponse(message.getText()))
+                .text(responseService.getResponse(text))
                 .parseMode("HTML")
                 .chatId(String.valueOf(message.getChatId()))
                 .replyMarkup(keyboard)

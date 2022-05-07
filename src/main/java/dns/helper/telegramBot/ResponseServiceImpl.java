@@ -18,14 +18,20 @@ public class ResponseServiceImpl implements ResponseService {
 
     @Override
     public String getResponse(String text) {
-        if ("/start".equals(text)) {
-            return Command.GREETINGS.getType();
+        if (Command.START.getType().equals(text)) {
+            return "Привіт, я твій Бот-Помічник:)";
+        }  else if (Command.MAIN.getType().equals(text)) {
+            return "Виберіть необхідний розділ";
+        }  else if (Command.MEDICINE.getType().equals(text)) {
+            return "Виберіть необхідний підрозділ";
+        }  else if (Command.GUARDIANSHIP.getType().equals(text)) {
+            return "Виберіть необхідний підрозділ";
         }  else if (Command.LINKS.getType().equals(text)) {
             return linkService.getAll().stream().map(this::getLinkInfo).collect(Collectors.joining());
         } else if (Command.EMERGENCIES.getType().equals(text)) {
             return emergencyService.getAll().stream().map(this::getEmergencyInfo).collect(Collectors.joining());
         } else {
-            return Command.NOTFOUND.getType();
+            return "Команда не знайдена";
         }
     }
 

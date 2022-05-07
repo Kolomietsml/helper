@@ -1,30 +1,29 @@
 package dns.helper.telegramBot;
 
+import dns.helper.telegramBot.keyboard.MainMenuService;
+import dns.helper.telegramBot.keyboard.SubmenuService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import java.util.List;
+import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class MarkupServiceImpl implements MarkupService {
 
+    private final MainMenuService mainMenuService;
+    private final SubmenuService submenuService;
+
     @Override
-    public ReplyKeyboardMarkup getKeyBoard() {
-        var keyboardRows = List.of(
-                createRow(Command.LINKS.getType()),
-                createRow(Command.EMERGENCIES.getType()));
+    public ReplyKeyboardMarkup getKeyBoard(String title) {
 
-        return ReplyKeyboardMarkup.builder()
-                .keyboard(keyboardRows)
-                .resizeKeyboard(true)
-                .oneTimeKeyboard(true)
-                .build();
-    }
+        for (Map.Entry<Command, ReplyKeyboardMarkup> entry : submenuService.getKeyboards().entrySet()) {
+            if (entry.getKey().getType().equals(title)){
+                return entry.getValue();
+            }
+        }
 
-    private KeyboardRow createRow(String title) {
-        var row = new KeyboardRow();
-        row.add(title);
-        return row;
+        return mainMenuService.getKeyboard();
     }
 }
