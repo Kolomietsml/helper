@@ -17,9 +17,9 @@ public class Emergency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 }

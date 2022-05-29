@@ -4,5 +4,5 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 
 public interface MarkupService {
 
-    ReplyKeyboardMarkup getKeyBoard();
+    ReplyKeyboardMarkup getKeyBoard(String title);
 }

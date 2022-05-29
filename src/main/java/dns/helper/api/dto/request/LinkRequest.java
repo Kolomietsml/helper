@@ -14,4 +14,10 @@ public class LinkRequest {
 
     @NotBlank(message = "Field is mandatory")
     private String title;
+
+    @NotBlank(message = "Field is mandatory")
+    private String description;
+
+    @NotBlank(message = "Field is mandatory")
+    private String command;
 }

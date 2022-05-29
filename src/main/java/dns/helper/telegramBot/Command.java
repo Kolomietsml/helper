@@ -5,10 +5,13 @@ import lombok.Getter;
 @Getter
 public enum Command {
 
-    GREETINGS("Привіт"),
-    LINKS("Корисна інформація"),
+    START("/start"),
+    MAIN("Головне меню"),
+    INFO("Корисна інформація"),
+    LINKS("Корисні посилання"),
     EMERGENCIES("Номери телефонів екстреної допомоги"),
-    NOTFOUND("Команда не знайдена");
+    MEDICAL_CARE("Медична допомога"),
+    TRANSPORT("Транспорт");
 
     private final String type;
 
