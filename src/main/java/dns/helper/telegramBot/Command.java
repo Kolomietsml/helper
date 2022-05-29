@@ -6,12 +6,12 @@ import lombok.Getter;
 public enum Command {
 
     START("/start"),
-    GREETINGS("Привіт"),
     MAIN("Головне меню"),
-    MEDICINE("Опіка медична"),
-    GUARDIANSHIP("Опіка правова"),
-    LINKS("Корисна інформація"),
-    EMERGENCIES("Номери телефонів екстреної допомоги");
+    INFO("Корисна інформація"),
+    LINKS("Корисні посилання"),
+    EMERGENCIES("Номери телефонів екстреної допомоги"),
+    MEDICAL_CARE("Медична допомога"),
+    TRANSPORT("Транспорт");
 
     private final String type;
 

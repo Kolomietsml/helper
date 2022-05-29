@@ -1,8 +1,9 @@
 package dns.helper.service;
 
-import dns.helper.db.domain.Link;
 import dns.helper.api.dto.request.LinkRequest;
+import dns.helper.db.domain.Link;
 import dns.helper.db.repository.LinkRepository;
+import dns.helper.telegramBot.Command;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,11 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
+    public List<Link> getAllByCommand(Command command) {
+        return repository.findAllLinksByCommand(command);
+    }
+
+    @Override
     public Link getLinkById(long id) {
         var link = repository.findLinkById(id);
         if (link == null) {
@@ -34,6 +40,8 @@ public class LinkServiceImpl implements LinkService {
         var link = new Link();
         link.setUrl(request.getUrl());
         link.setTitle(request.getTitle());
+        link.setDescription(request.getDescription());
+        link.setCommand(Command.valueOf(request.getCommand()));
         return repository.save(link);
     }
 
@@ -42,6 +50,8 @@ public class LinkServiceImpl implements LinkService {
         var link = getLinkById(id);
         link.setUrl(request.getUrl());
         link.setTitle(request.getTitle());
+        link.setDescription(request.getDescription());
+        link.setCommand(Command.valueOf(request.getCommand()));
         return repository.save(link);
     }
 

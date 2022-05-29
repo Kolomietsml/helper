@@ -19,6 +19,8 @@ public class LinkAssembler implements RepresentationModelAssembler<Link, LinkRes
         var response = LinkResponse.builder()
                 .url(entity.getUrl())
                 .title(entity.getTitle())
+                .description(entity.getDescription())
+                .command(entity.getCommand().getType())
                 .build();
 
         response.add(linkTo(methodOn(LinkResource.class)

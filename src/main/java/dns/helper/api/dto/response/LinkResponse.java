@@ -12,4 +12,6 @@ public class LinkResponse extends RepresentationModel<LinkResponse> {
 
     private String url;
     private String title;
+    private String description;
+    private String command;
 }
